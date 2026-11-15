@@ -3,7 +3,7 @@
 컴활 1급을 공부하는 여자친구를 위한 응원 웹페이지. 크리스마스 트리 장식을 누르면 응원 문구와 반짝이가 나옵니다.
 
 - 바로가기: https://ajh-project.github.io/useless-30-christmas-cheer/
-- 🎄 트리: 장식·별 탭 → 응원 문구 + 폭죽, 눈 내리는 밤하늘
+- 🎄 3D 거실: 벽난로·우드 벽 속 실사풍 트리, 구슬·별 탭 → 응원 문구 + 폭죽, 밀어서 트리 회전
 - 📚 공부 체크리스트: 필기(컴퓨터 일반·스프레드시트·데이터베이스) / 실기(엑셀·액세스), 전부 체크하면 별이 켜지고 축하
 - 📝 시험 D-day 설정, 🎅 크리스마스 D-day
 - 💻 터미널 모드: 반짝이는 ASCII 트리 + 타이핑되는 응원
@@ -17,4 +17,4 @@ npm install
 npm run dev      # 개발 서버
 npm run deploy   # 빌드 후 gh-pages 브랜치로 배포
 ```
-Vue 3 · Vite · TypeScript · canvas-confetti
+Vue 3 · Vite · TypeScript · Three.js · canvas-confetti
