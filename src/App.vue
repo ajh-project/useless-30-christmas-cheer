@@ -12,6 +12,13 @@ const ORNAMENTS = [
   { x: 76, y: 71, c: '#ffd166' },
 ]
 
+// 전구 줄 위의 반짝이 전구 [x, y, 색]
+const BULBS: [number, number, string][] = [
+  [48, 106, '#ff6b81'], [64, 112, '#ffd166'], [82, 117, '#74d3ff'], [100, 119, '#ff9ff3'], [118, 117, '#9bff9b'], [136, 112, '#ff6b81'], [152, 106, '#ffd166'],
+  [34, 156, '#74d3ff'], [54, 166, '#ff9ff3'], [76, 172, '#ffd166'], [100, 174, '#ff6b81'], [124, 172, '#74d3ff'], [146, 166, '#9bff9b'], [166, 156, '#ff9ff3'],
+  [22, 208, '#ffd166'], [44, 218, '#ff6b81'], [70, 225, '#74d3ff'], [100, 227, '#ffd166'], [130, 225, '#ff9ff3'], [156, 218, '#9bff9b'], [178, 208, '#ff6b81'],
+]
+
 const message = ref(todayCheer())
 const bump = ref(0)
 const starOn = ref(false)
@@ -139,19 +146,65 @@ onBeforeUnmount(() => {
       <div class="tree">
         <button class="star" :class="{ on: starOn }" @click="tapStar" aria-label="별">★</button>
         <svg viewBox="0 0 200 240" class="svg">
-          <polygon points="100,18 168,100 32,100" fill="#2e9e5b" />
-          <polygon points="100,58 182,148 18,148" fill="#26884d" />
-          <polygon points="100,100 194,200 6,200" fill="#1f7340" />
-          <rect x="86" y="198" width="28" height="30" rx="4" fill="#9a6a3c" />
-          <path d="M40 100 Q100 116 160 100" stroke="#ffe9a8" stroke-width="2" fill="none" stroke-dasharray="2 6" stroke-linecap="round" class="lights" />
-          <path d="M26 148 Q100 168 174 148" stroke="#ffe9a8" stroke-width="2" fill="none" stroke-dasharray="2 6" stroke-linecap="round" class="lights" />
+          <defs>
+            <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#3fb36e" /><stop offset=".55" stop-color="#1f8048" /><stop offset="1" stop-color="#145a32" />
+            </linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#4cc47c" /><stop offset=".55" stop-color="#25904f" /><stop offset="1" stop-color="#186a3a" />
+            </linearGradient>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#5ad68b" /><stop offset=".55" stop-color="#2ea15a" /><stop offset="1" stop-color="#1c7a44" />
+            </linearGradient>
+            <linearGradient id="gt" x1="0" x2="1"><stop offset="0" stop-color="#7a4f2a" /><stop offset=".5" stop-color="#b17a45" /><stop offset="1" stop-color="#6b4424" /></linearGradient>
+            <radialGradient id="halo"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".35" /><stop offset="1" stop-color="#ffe9a8" stop-opacity="0" /></radialGradient>
+          </defs>
+          <circle cx="100" cy="120" r="100" fill="url(#halo)" />
+          <!-- 줄기 -->
+          <rect x="85" y="196" width="30" height="34" rx="5" fill="url(#gt)" />
+          <!-- 아래층 -->
+          <path d="M100 100 L194 204 Q182 214 168 206 Q152 218 136 208 Q118 220 100 210 Q82 220 64 208 Q48 218 32 206 Q18 214 6 204 Z" fill="url(#g3)" />
+          <!-- 가운데층 -->
+          <path d="M100 58 L182 152 Q170 162 156 154 Q140 166 124 156 Q112 164 100 158 Q88 164 76 156 Q60 166 44 154 Q30 162 18 152 Z" fill="url(#g2)" />
+          <!-- 윗층 -->
+          <path d="M100 20 L166 104 Q154 112 140 106 Q124 116 112 108 Q100 116 88 108 Q76 116 60 106 Q46 112 34 104 Z" fill="url(#g1)" />
+          <!-- 잎 결(밝은 줄) -->
+          <g stroke="#7be8a4" stroke-opacity=".35" stroke-width="2" stroke-linecap="round" fill="none">
+            <path d="M92 36 L62 92" /><path d="M86 78 L40 140" /><path d="M80 122 L26 192" />
+          </g>
+          <g stroke="#0e4a28" stroke-opacity=".3" stroke-width="2" stroke-linecap="round" fill="none">
+            <path d="M112 36 L140 92" /><path d="M116 78 L160 140" /><path d="M120 122 L176 192" />
+          </g>
+          <!-- 가지 끝 눈 -->
+          <g fill="#fff" fill-opacity=".92">
+            <ellipse cx="38" cy="105" rx="7" ry="3" /><ellipse cx="62" cy="108" rx="6" ry="2.6" /><ellipse cx="100" cy="115" rx="6" ry="2.6" />
+            <ellipse cx="138" cy="108" rx="6" ry="2.6" /><ellipse cx="162" cy="105" rx="7" ry="3" />
+            <ellipse cx="22" cy="153" rx="8" ry="3" /><ellipse cx="46" cy="159" rx="7" ry="2.8" /><ellipse cx="100" cy="162" rx="7" ry="2.8" />
+            <ellipse cx="154" cy="159" rx="7" ry="2.8" /><ellipse cx="178" cy="153" rx="8" ry="3" />
+            <ellipse cx="12" cy="205" rx="9" ry="3.2" /><ellipse cx="36" cy="212" rx="8" ry="3" /><ellipse cx="66" cy="214" rx="8" ry="3" />
+            <ellipse cx="100" cy="216" rx="8" ry="3" /><ellipse cx="134" cy="214" rx="8" ry="3" /><ellipse cx="164" cy="212" rx="8" ry="3" /><ellipse cx="188" cy="205" rx="9" ry="3.2" />
+            <path d="M100 20 L92 38 Q100 34 108 38 Z" />
+          </g>
+          <!-- 전구 줄 -->
+          <path d="M42 100 Q100 122 158 100" stroke="#c9a24a" stroke-width="1.2" fill="none" />
+          <path d="M24 148 Q100 176 176 148" stroke="#c9a24a" stroke-width="1.2" fill="none" />
+          <path d="M10 200 Q100 232 190 200" stroke="#c9a24a" stroke-width="1.2" fill="none" />
+          <g class="bulbs">
+            <circle v-for="(b, i) in BULBS" :key="i" :cx="b[0]" :cy="b[1]" r="2.6" :fill="b[2]" :style="{ animationDelay: (i % 5) * 0.3 + 's', color: b[2] }" />
+          </g>
+          <!-- 선물 상자 -->
+          <g>
+            <rect x="22" y="212" width="32" height="22" rx="2" fill="#e8455f" /><rect x="35" y="212" width="6" height="22" fill="#ffe9a8" /><rect x="22" y="220" width="32" height="5" fill="#ffe9a8" />
+            <path d="M38 212 q-8 -9 -2 -9 q5 0 2 9 q3 -9 8 -9 q6 0 -8 9z" fill="#ffe9a8" />
+            <rect x="140" y="218" width="26" height="16" rx="2" fill="#4aa8ff" /><rect x="150" y="218" width="6" height="16" fill="#fff" /><rect x="140" y="224" width="26" height="4" fill="#fff" />
+            <rect x="158" y="224" width="22" height="10" rx="2" fill="#b57bff" /><rect x="166" y="224" width="5" height="10" fill="#ffe9a8" />
+          </g>
         </svg>
         <button
           v-for="(o, i) in ORNAMENTS" :key="i" class="orn"
           :style="{ left: o.x + '%', top: o.y + '%', background: o.c, animationDelay: i * 0.23 + 's' }"
           @click="tapOrnament(i)" aria-label="응원 장식"
         />
-        <div class="face">•ᴗ•</div>
       </div>
       <div class="snowground" />
     </main>
@@ -213,9 +266,9 @@ onBeforeUnmount(() => {
 .stage { position: relative; flex: 1; width: 100%; max-width: 440px; min-height: 0; display: flex; justify-content: center; align-items: flex-end; }
 .tree { position: relative; height: min(96%, 92vw); aspect-ratio: 200 / 240; z-index: 2; margin-bottom: 14px; animation: sway 5s ease-in-out infinite; transform-origin: bottom center; }
 .svg { width: 100%; height: 100%; filter: drop-shadow(0 8px 14px rgba(0,0,0,.4)); }
-.lights { animation: twinkle 1.4s ease-in-out infinite alternate; }
+.bulbs circle { animation: twinkle 1.1s ease-in-out infinite alternate; filter: drop-shadow(0 0 3px currentColor); }
 .star { position: absolute; left: 50%; top: -4%; transform: translateX(-50%); font-size: clamp(34px, 9vw, 48px);
-  color: #8a7a3a; transition: .3s; z-index: 3; line-height: 1; }
+  color: #d8b94e; text-shadow: 0 0 10px rgba(255,216,74,.6); transition: .3s; z-index: 3; line-height: 1; }
 .star.on { color: #ffd84a; text-shadow: 0 0 18px #ffd84a, 0 0 40px #ffb300; animation: pulse 1.2s infinite; }
 .orn { position: absolute; width: 7%; aspect-ratio: 1; border-radius: 50%; transform: translate(-50%, -50%);
   box-shadow: inset -3px -3px 5px rgba(0,0,0,.25), inset 3px 3px 5px rgba(255,255,255,.55);
